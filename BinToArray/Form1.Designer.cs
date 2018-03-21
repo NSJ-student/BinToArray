@@ -33,13 +33,15 @@
             this.btnSave = new System.Windows.Forms.Button();
             this.tbSavePath = new System.Windows.Forms.TextBox();
             this.rtbArrayText = new System.Windows.Forms.RichTextBox();
+            this.progressLoad = new System.Windows.Forms.ProgressBar();
             this.SuspendLayout();
             // 
             // btnLoad
             // 
-            this.btnLoad.Location = new System.Drawing.Point(12, 12);
+            this.btnLoad.Location = new System.Drawing.Point(16, 14);
+            this.btnLoad.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnLoad.Name = "btnLoad";
-            this.btnLoad.Size = new System.Drawing.Size(66, 23);
+            this.btnLoad.Size = new System.Drawing.Size(88, 27);
             this.btnLoad.TabIndex = 0;
             this.btnLoad.Text = "Load";
             this.btnLoad.UseVisualStyleBackColor = true;
@@ -47,17 +49,19 @@
             // 
             // tbLoadPath
             // 
-            this.tbLoadPath.Location = new System.Drawing.Point(84, 14);
+            this.tbLoadPath.Location = new System.Drawing.Point(112, 16);
+            this.tbLoadPath.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbLoadPath.Name = "tbLoadPath";
             this.tbLoadPath.ReadOnly = true;
-            this.tbLoadPath.Size = new System.Drawing.Size(236, 20);
+            this.tbLoadPath.Size = new System.Drawing.Size(313, 25);
             this.tbLoadPath.TabIndex = 1;
             // 
             // btnSave
             // 
-            this.btnSave.Location = new System.Drawing.Point(12, 41);
+            this.btnSave.Location = new System.Drawing.Point(16, 47);
+            this.btnSave.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.btnSave.Name = "btnSave";
-            this.btnSave.Size = new System.Drawing.Size(66, 23);
+            this.btnSave.Size = new System.Drawing.Size(88, 27);
             this.btnSave.TabIndex = 2;
             this.btnSave.Text = "Save";
             this.btnSave.UseVisualStyleBackColor = true;
@@ -65,30 +69,42 @@
             // 
             // tbSavePath
             // 
-            this.tbSavePath.Location = new System.Drawing.Point(84, 43);
+            this.tbSavePath.Location = new System.Drawing.Point(112, 50);
+            this.tbSavePath.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.tbSavePath.Name = "tbSavePath";
             this.tbSavePath.ReadOnly = true;
-            this.tbSavePath.Size = new System.Drawing.Size(236, 20);
+            this.tbSavePath.Size = new System.Drawing.Size(313, 25);
             this.tbSavePath.TabIndex = 3;
             // 
             // rtbArrayText
             // 
-            this.rtbArrayText.Location = new System.Drawing.Point(12, 70);
+            this.rtbArrayText.Location = new System.Drawing.Point(16, 81);
+            this.rtbArrayText.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.rtbArrayText.Name = "rtbArrayText";
-            this.rtbArrayText.Size = new System.Drawing.Size(308, 180);
+            this.rtbArrayText.Size = new System.Drawing.Size(409, 207);
             this.rtbArrayText.TabIndex = 4;
             this.rtbArrayText.Text = "";
             // 
+            // progressLoad
+            // 
+            this.progressLoad.Location = new System.Drawing.Point(112, 16);
+            this.progressLoad.Name = "progressLoad";
+            this.progressLoad.Size = new System.Drawing.Size(313, 25);
+            this.progressLoad.TabIndex = 5;
+            this.progressLoad.Visible = false;
+            // 
             // BinToArray
             // 
-            this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
+            this.AutoScaleDimensions = new System.Drawing.SizeF(8F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(332, 262);
+            this.ClientSize = new System.Drawing.Size(443, 302);
+            this.Controls.Add(this.progressLoad);
             this.Controls.Add(this.rtbArrayText);
             this.Controls.Add(this.tbSavePath);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.tbLoadPath);
             this.Controls.Add(this.btnLoad);
+            this.Margin = new System.Windows.Forms.Padding(4, 3, 4, 3);
             this.Name = "BinToArray";
             this.Text = "Bin To Array";
             this.ResumeLayout(false);
@@ -103,6 +119,7 @@
         private System.Windows.Forms.Button btnSave;
         private System.Windows.Forms.TextBox tbSavePath;
         private System.Windows.Forms.RichTextBox rtbArrayText;
+        private System.Windows.Forms.ProgressBar progressLoad;
     }
 }
 

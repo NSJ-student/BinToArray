@@ -15,16 +15,71 @@ namespace BinToArray
     {
         OpenFileDialog open_dialog;
         SaveFileDialog save_dialog;
+        BackgroundWorker LoadWorker;
 
         public BinToArray()
         {
             InitializeComponent();
+
+            progressLoad.Visible = false;
+            progressLoad.Location = tbLoadPath.Location;
+            progressLoad.Size = tbLoadPath.Size;
 
             open_dialog = new OpenFileDialog();
             open_dialog.Filter = "Bin Files(*.bin)|*.bin";
             save_dialog = new SaveFileDialog();
             save_dialog.Filter = "Text Files(*.txt)|*.txt";
 
+            LoadWorker = new BackgroundWorker();
+            LoadWorker.WorkerReportsProgress = true;
+            LoadWorker.RunWorkerCompleted += new RunWorkerCompletedEventHandler(MakeComponentsComplete);
+            LoadWorker.DoWork += new DoWorkEventHandler(MakeComponents);
+            LoadWorker.ProgressChanged += new ProgressChangedEventHandler(UpdateProgressBar);
+        }
+
+        private void UpdateProgressBar(object obj, ProgressChangedEventArgs arg)
+        {
+            progressLoad.Value = arg.ProgressPercentage;
+        }
+
+        private void MakeComponents(object obj, DoWorkEventArgs arg)
+        {
+            string FilePath = (string)arg.Argument;
+
+            FileStream file = File.OpenRead(open_dialog.FileName);
+            BinaryReader reader = new BinaryReader(file);
+
+            string temp = "";
+            int read = 0;
+            int pos = 0;
+
+            while (reader.BaseStream.Length - reader.BaseStream.Position >= 4)
+            {
+                read = reader.ReadInt32();
+                temp += "0x" + read.ToString("X") + ", ";
+                pos++;
+                if (pos == 4)
+                {
+                    pos = 0;
+                    temp += "\n";
+                    LoadWorker.ReportProgress((int)(reader.BaseStream.Position * 100 / reader.BaseStream.Length));
+                }
+            }
+
+            reader.Close();
+            file.Close();
+
+            arg.Result = temp;
+        }
+
+        private void MakeComponentsComplete(object obj, RunWorkerCompletedEventArgs arg)
+        {
+            rtbArrayText.Text = (string)arg.Result;
+            MessageBox.Show("Conversion Complete!");
+
+            btnLoad.Enabled = true;
+            btnSave.Enabled = true;
+            progressLoad.Visible = false;
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
@@ -33,28 +88,11 @@ namespace BinToArray
             {
                 tbLoadPath.Text = open_dialog.FileName;
 
-                FileStream file = File.OpenRead(open_dialog.FileName);
-                BinaryReader reader = new BinaryReader(file);
-                
-                string temp = "";
-                int read = 0;
-                int pos = 0;
+                progressLoad.Visible = true;
+                btnLoad.Enabled = false;
+                btnSave.Enabled = false;
 
-                while(reader.BaseStream.Length - reader.BaseStream.Position >= 4)
-                {
-                    read = reader.ReadInt32();
-                    temp += "0x" + read.ToString("X") + ", ";
-                    pos++;
-                    if(pos == 4)
-                    {
-                        pos = 0;
-                        temp += "\n";
-                    }
-                }
-                rtbArrayText.Text = temp;
-
-                reader.Close();
-                file.Close();
+                LoadWorker.RunWorkerAsync(open_dialog.FileName);
             }
         }
 
