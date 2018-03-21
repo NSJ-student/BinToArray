@@ -24,6 +24,7 @@ namespace BinToArray
             open_dialog.Filter = "Bin Files(*.bin)|*.bin";
             save_dialog = new SaveFileDialog();
             save_dialog.Filter = "Text Files(*.txt)|*.txt";
+
         }
 
         private void btnLoad_Click(object sender, EventArgs e)
