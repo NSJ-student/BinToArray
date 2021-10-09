@@ -49,19 +49,20 @@ namespace BinToArray
             FileStream file = File.OpenRead(open_dialog.FileName);
             BinaryReader reader = new BinaryReader(file);
 
-            string temp = "";
+            int lenth = Convert.ToInt32(file.Length);
+            StringBuilder builder = new StringBuilder((int)4* lenth);
             int read = 0;
             int pos = 0;
 
             while (reader.BaseStream.Length - reader.BaseStream.Position >= 4)
             {
                 read = reader.ReadInt32();
-                temp += "0x" + read.ToString("X") + ", ";
+                builder.Append("0x" + read.ToString("X") + ", ");
                 pos++;
                 if (pos == 4)
                 {
                     pos = 0;
-                    temp += "\n";
+                    builder.Append("\n");
                     LoadWorker.ReportProgress((int)(reader.BaseStream.Position * 100 / reader.BaseStream.Length));
                 }
             }
@@ -69,7 +70,7 @@ namespace BinToArray
             reader.Close();
             file.Close();
 
-            arg.Result = temp;
+            arg.Result = builder.ToString();
         }
 
         private void MakeComponentsComplete(object obj, RunWorkerCompletedEventArgs arg)
